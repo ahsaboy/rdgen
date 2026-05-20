@@ -664,6 +664,13 @@ jobs:
             exit 1
           fi
 
+      - name: Upload dmg to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.filename }}-${{ matrix.job.arch }}.dmg
+          path: $GITHUB_WORKSPACE/${{ env.filename }}-${{ matrix.job.arch }}.dmg
+          retention-days: 1
+
       - name: send file to rdgen server
         if: ${{ env.rdgen == 'true' }}
         shell: bash

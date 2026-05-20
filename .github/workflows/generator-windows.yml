@@ -604,6 +604,23 @@ jobs:
         run: |
           mv ./SignOutput/rustdesk.msi "./SignOutput/${{ env.filename }}.msi" || echo "rustdesk"
 
+      - name: Upload exe to Artifacts
+        uses: actions/upload-artifact@v4
+        if: env.UPLOAD_ARTIFACT == 'true'
+        with:
+          name: ${{ env.filename }}.exe
+          path: ./SignOutput/${{ env.filename }}.exe
+          retention-days: 1
+
+      - name: Upload msi to Artifacts
+        uses: actions/upload-artifact@v4
+        if: env.UPLOAD_ARTIFACT == 'true'
+        continue-on-error: true
+        with:
+          name: ${{ env.filename }}.msi
+          path: ./SignOutput/${{ env.filename }}.msi
+          retention-days: 1
+
       - name: send file to rdgen server
         if: ${{ env.rdgen == 'true' }}
         uses: nick-fields/retry@v3

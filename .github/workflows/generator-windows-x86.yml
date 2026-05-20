@@ -430,6 +430,13 @@ jobs:
         run: |
           mv ./SignOutput/rustdesk.exe "./SignOutput/${{ env.filename }}.exe" || echo "rustdesk"
 
+      - name: Upload exe to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.filename }}.exe
+          path: ./SignOutput/${{ env.filename }}.exe
+          retention-days: 1
+
       - name: send file to rdgen server
         if: ${{ env.rdgen == 'true' }}
         shell: bash
